@@ -1,2 +1,2 @@
-# Proyecto
-Seminario Python 2026.
+Nombre: Iñaki Bueno
+Legajo: 26229/0
