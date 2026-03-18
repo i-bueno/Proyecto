@@ -50,7 +50,7 @@ def accion2(lista,equipos):
             for aux in lista:
                 if aux == equipoact:
                     equipos -= 1
-                    print("El equipo ha siido eliminado del torneo correctamente.")
+                    print("El equipo ha sido eliminado del torneo correctamente.")
                     eliminado = True
             if eliminado == False:
                 print("El equipo no se encuentra en el torneo.")
@@ -58,6 +58,44 @@ def accion2(lista,equipos):
                 lista.pop(equipoact)
     return lista, equipos    
 
+#Registrar resultado
+def accion3(lista):
+    salir = 0
+    while salir == 0:
+        valido = False
+        print()
+        local = input("Introduzca el nombre del equipo local (Presione 'Q' para salir): ").upper() 
+        print()
+        if local == "Q":
+            salir = 1
+        else:
+            visitante = input("Introduzca el nombre del equipo visitante: ").upper()
+
+            for aux in lista:
+                if local == aux or visitante == aux:
+                    valido = True
+            if valido == False:
+                print("Equipo/s no valido/s.")
+            else:
+                marcador = input("Introduzca el marcador en formato '(x-x)': ")
+                # Verifico la validez del formato del marcador.
+                while len(marcador) != 3 or marcador[1] != "-" or not marcador[0].isdigit() or not marcador[2].isdigit():
+                    print("Marcador con formato inválido.")
+                    marcador = input("Introduzca el marcador en formato '(x-x)': ")
+                    print()
+                
+                if marcador[0] > marcador[2]:
+                    lista.update({local : lista.get(local)+3})
+                
+                elif marcador[0] < marcador[2]:
+                    lista.update({visitante : lista.get(visitante)+3})
+                    
+                else:
+                    lista.update({local : lista.get(local)+1})
+                    lista.update({visitante : lista.get(visitante)+1})
+                print("Resultado guardado correctamente.")
+    return lista
+                
 while num != 5:
     print("Que acción le gustaría realizar?")
     print("1 - Agregar un equipo al torneo, 2 - Eliminar un equipo del torneo")
@@ -66,5 +104,7 @@ while num != 5:
         lista_equipos, cantidad_equipos = accion1(lista_equipos, cantidad_equipos)
     elif num == 2:
         lista_equipos, cantidad_equipos = accion2(lista_equipos, cantidad_equipos)
+    elif num == 3:
+        lista_equipos = accion3(lista_equipos)
 print("---------------------")
 print("Hasta luego!") 
