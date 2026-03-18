@@ -37,11 +37,34 @@ def accion1(lista,equipos):
                 print(f"El equipo '{equipoact}' ha sido agregado al torneo correctamente.")
     return lista, equipos    
 
+#Eliminar Equipo
+def accion2(lista,equipos):
+    salir = 0
+    while salir == 0:
+        print()
+        equipoact = (input("Introduzca el nombre del equipo a eliminar (Presione 'Q' para salir): ").upper())
+        if equipoact == "Q":
+            salir = 1
+        else:
+            eliminado = False
+            for aux in lista:
+                if aux == equipoact:
+                    equipos -= 1
+                    print("El equipo ha siido eliminado del torneo correctamente.")
+                    eliminado = True
+            if eliminado == False:
+                print("El equipo no se encuentra en el torneo.")
+            else:
+                lista.pop(equipoact)
+    return lista, equipos    
+
 while num != 5:
     print("Que acción le gustaría realizar?")
     print("1 - Agregar un equipo al torneo, 2 - Eliminar un equipo del torneo")
     num = int(input("3 - Registrar un resultado, 4 - Mostrar la tabla de posiciones. 5 - Salir. : "))
     if num == 1:
         lista_equipos, cantidad_equipos = accion1(lista_equipos, cantidad_equipos)
+    elif num == 2:
+        lista_equipos, cantidad_equipos = accion2(lista_equipos, cantidad_equipos)
 print("---------------------")
 print("Hasta luego!") 
