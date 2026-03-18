@@ -62,7 +62,8 @@ def accion2(lista,equipos):
 def accion3(lista):
     salir = 0
     while salir == 0:
-        valido = False
+        valido1 = False
+        valido2 = False
         print()
         local = input("Introduzca el nombre del equipo local (Presione 'Q' para salir): ").upper() 
         print()
@@ -71,10 +72,13 @@ def accion3(lista):
         else:
             visitante = input("Introduzca el nombre del equipo visitante: ").upper()
 
+            # Verifico validez de los equipos
             for aux in lista:
-                if local == aux or visitante == aux:
-                    valido = True
-            if valido == False:
+                if local == aux:
+                    valido1 = True
+                elif visitante == aux:
+                    valido2 = True
+            if valido1 == False or valido2 == False:
                 print("Equipo/s no valido/s.")
             else:
                 marcador = input("Introduzca el marcador en formato '(x-x)': ")
@@ -84,10 +88,10 @@ def accion3(lista):
                     marcador = input("Introduzca el marcador en formato '(x-x)': ")
                     print()
                 
-                if marcador[0] > marcador[2]:
+                if int(marcador[0]) > int(marcador[2]):
                     lista.update({local : lista.get(local)+3})
                 
-                elif marcador[0] < marcador[2]:
+                elif int(marcador[0]) < int(marcador[2]):
                     lista.update({visitante : lista.get(visitante)+3})
                     
                 else:
@@ -95,16 +99,47 @@ def accion3(lista):
                     lista.update({visitante : lista.get(visitante)+1})
                 print("Resultado guardado correctamente.")
     return lista
-                
-while num != 5:
+
+# Mostrar tabla ordenada
+def accion4 (lista):
+    print()
+    print("TABLA DE POSICIONES")
+    print("---------------------")
+
+    # Verifico equipos
+    if len(lista) == 0:
+        print("No hay equipos cargados.")
+    else:
+    
+        tabla_ordenada = sorted(lista.values(), reverse=True)
+        pos = 1
+        mostrados = []
+
+        for puntos in tabla_ordenada:
+            for equipo in lista:
+                if lista[equipo] == puntos and equipo not in mostrados:
+                    print(f"{pos}. {equipo}: {puntos} puntos")
+                    mostrados.append(equipo)
+                    pos += 1
+
+    print("---------------------")
+    return lista
+
+# Programa principal                
+while num != "5":
     print("Que acción le gustaría realizar?")
     print("1 - Agregar un equipo al torneo, 2 - Eliminar un equipo del torneo")
-    num = int(input("3 - Registrar un resultado, 4 - Mostrar la tabla de posiciones. 5 - Salir. : "))
-    if num == 1:
+    num = input("3 - Registrar un resultado, 4 - Mostrar la tabla de posiciones. 5 - Salir. : ")
+    if num == "1":
         lista_equipos, cantidad_equipos = accion1(lista_equipos, cantidad_equipos)
-    elif num == 2:
+    elif num == "2":
         lista_equipos, cantidad_equipos = accion2(lista_equipos, cantidad_equipos)
-    elif num == 3:
+    elif num == "3":
         lista_equipos = accion3(lista_equipos)
+    elif num == "4":
+        lista_equipos = accion4(lista_equipos)
+    elif num != "5":
+        print("Ingrese un número válido: ")
+        print()
 print("---------------------")
 print("Hasta luego!") 
